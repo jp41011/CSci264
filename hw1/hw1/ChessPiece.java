@@ -33,21 +33,27 @@ public class ChessPiece {
 		pieceID = ChessPieceID++; // get next id and increase id
 		
 		if(name == "K"){
+			pieceID = ChessPieceID++;
 			pieceValue = 10; // in solitaire chess different than regular chess
 		}
 		else if(name == "Q"){
+			pieceID = ChessPieceID++;
 			pieceValue = 9;
 		}
 		else if(name == "R"){
+			pieceID = ChessPieceID++;
 			pieceValue = 5;
 		}
 		else if(name == "B"){
+			pieceID = ChessPieceID++;
 			pieceValue = 3;
 		}
 		else if(name == "N"){
+			pieceID = ChessPieceID++;
 			pieceValue = 3;
 		}
 		else if(name == "P"){
+			pieceID = ChessPieceID++;
 			pieceValue = 1;
 		}
 		else{
