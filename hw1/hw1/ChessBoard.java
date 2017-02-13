@@ -34,11 +34,11 @@ public class ChessBoard {
 		boolean pieceFound = false;
 		
 		// left to right first
-		for(int curX=1; curX<=4; curX++)
+		for(int curY=4; curY>=1; curY--)
 		{
 			System.out.print("|");
 			// top to bottom
-			for(int curY=4; curY>=1; curY--)
+			for(int curX=1; curX<=4; curX++)
 			{
 				pieceFound = false;
 				for(int pieceIndex = 0; pieceIndex < boardPieces.size(); pieceIndex++)

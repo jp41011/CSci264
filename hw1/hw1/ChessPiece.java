@@ -6,7 +6,7 @@ package hw1;
 
 public class ChessPiece {
 
-	public String name;
+	public char name;
 	public int xLocation;
 	public int yLocation;
 	public int pieceID;
@@ -17,7 +17,7 @@ public class ChessPiece {
 	// default constructor
 	ChessPiece()
 	{
-		name = "PieceName";
+		name = '0';
 		xLocation = 0;
 		yLocation = 0;
 		pieceID = 0;
@@ -25,39 +25,34 @@ public class ChessPiece {
 	}
 	
 	//constructor
-	ChessPiece(String newName, int x, int y)
+	ChessPiece(char newName, int x, int y)
 	{
-		name = newName;
+		this.name = newName;
 		xLocation = x;
 		yLocation = y;
 		pieceID = ChessPieceID++; // get next id and increase id
 		
-		if(name == "K"){
-			pieceID = ChessPieceID++;
+		if(this.name == 'K'){
 			pieceValue = 10; // in solitaire chess different than regular chess
 		}
-		else if(name == "Q"){
-			pieceID = ChessPieceID++;
+		else if(this.name == 'Q'){
 			pieceValue = 9;
 		}
-		else if(name == "R"){
-			pieceID = ChessPieceID++;
+		else if(this.name == 'R'){
 			pieceValue = 5;
 		}
-		else if(name == "B"){
-			pieceID = ChessPieceID++;
+		else if(this.name == 'B'){
 			pieceValue = 3;
 		}
-		else if(name == "N"){
-			pieceID = ChessPieceID++;
+		else if(this.name == 'N'){
 			pieceValue = 3;
 		}
-		else if(name == "P"){
-			pieceID = ChessPieceID++;
+		else if(this.name == 'P'){
 			pieceValue = 1;
 		}
 		else{
 			System.out.println("Unknown Piece");
+			System.out.println(newName + " " + x + " " + y);
 		}
 	}
 }
