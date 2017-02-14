@@ -45,7 +45,7 @@ public class ChessBoard {
 				{
 					if(boardPieces.get(pieceIndex).xLocation == curX && boardPieces.get(pieceIndex).yLocation == curY)
 					{
-						System.out.print(boardPieces.get(pieceIndex).name);
+						System.out.print(boardPieces.get(pieceIndex).pieceType);
 						pieceFound = true;
 						break;
 					}

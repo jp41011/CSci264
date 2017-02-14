@@ -61,7 +61,7 @@ public class Hw1 {
 					int xlocation = Character.getNumericValue(xloc);
 					int ylocation = Character.getNumericValue(yloc);
 					
-					// create new chess piece and add to the list of peices
+					// create new chess piece and add to the list of pieces
 					ChessPiece newPiece = new ChessPiece(pieceType, xlocation, ylocation);
 					pieces.add(newPiece);
 				}
