@@ -1,11 +1,11 @@
 package hw1;
 
+import hw1.ChessBoard;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import hw1.ChessBoard;
 
 /*
  * Juan Pedraza - CSci 264 - Artificial Intelligence - 2/12/17

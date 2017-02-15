@@ -29,6 +29,10 @@ public class ChessBoard {
 	}
 	
 	// function to print the current view of the board
+	/**
+	 * shift+alt+j
+	 * @param boardPieces 
+	 */
 	public void printBoard(ArrayList<ChessPiece> boardPieces){
 		System.out.println(" - - - - ");
 		boolean pieceFound = false;
