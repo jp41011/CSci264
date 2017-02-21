@@ -37,6 +37,7 @@ public class Hw1 {
 		ArrayList<ChessPiece> board1 = boardPieces;
 		ArrayList<ChessMove> solution1 = DFS_Solve(board1);
 		System.out.println("Nodes touched: " + DFS_Count);
+		printMoves(solution1);
 		
 		//Breadth First Search
 		//Depth Limited Search
@@ -46,6 +47,11 @@ public class Hw1 {
 		System.out.println("*** End ***");
 	}
 	
+	/** DFS_Solve <br/>
+	 * Find solution using Depth First Search
+	 * @param board
+	 * @return
+	 */
 	static ArrayList<ChessMove> DFS_Solve(ArrayList<ChessPiece> board)
 	{
 		ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
@@ -53,6 +59,19 @@ public class Hw1 {
 		
 		
 		return moves;
+	}
+	
+	
+	/**
+	 * Given an array of piece moves, print out the list of moves.
+	 * @param moves
+	 */
+	static void printMoves(ArrayList<ChessMove> moves)
+	{
+		for(int i=0; i<moves.size(); i++)
+		{
+			System.out.println( moves.get(i).pieceType + " " + moves.get(i).xLocation + " " + moves.get(i).yLocation);
+		}
 	}
 	
 	/*
