@@ -1,6 +1,6 @@
 package hw1;
 
-import hw1.ChessBoard;
+//import hw1.ChessBoard;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 public class Hw1 {
 
+	static int DFS_Count = 0;
+	static int BFS_Count = 0;
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("*** Start ***");
@@ -30,13 +33,32 @@ public class Hw1 {
 		System.out.println("Pieces on board: " + boardPieces.size());
 		board.printBoard(boardPieces);
 		
+		//Depth First Search
+		ArrayList<ChessPiece> board1 = boardPieces;
+		ArrayList<ChessMove> solution1 = DFS_Solve(board1);
+		System.out.println("Nodes touched: " + DFS_Count);
+		
+		//Breadth First Search
+		//Depth Limited Search
+		//iterative Deepening Search
+		//A* search
 		
 		System.out.println("*** End ***");
 	}
 	
+	static ArrayList<ChessMove> DFS_Solve(ArrayList<ChessPiece> board)
+	{
+		ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
+		//TODO find solution using DFS
+		
+		
+		return moves;
+	}
+	
 	/*
 	 * method to read in a file with the list of pieces on the board and return an array list with them
-	 * TODO: explain the file standard ... 1 letter for piece 2 number for xLocation and yLocation no spaces
+	 * 1 letter for piece 2 number for xLocation and yLocation no spaces
+	 * Use one capital letter to id piece type, one number for the x location, one number for the y location
 	 */
 	static ArrayList<ChessPiece> readPieces(String filename){
 		
