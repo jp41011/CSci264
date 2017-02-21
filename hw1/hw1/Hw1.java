@@ -19,7 +19,10 @@ public class Hw1 {
 		// TODO Auto-generated method stub
 		System.out.println("*** Start ***");
 		
-		ChessPiece.ChessPieceID = 1; // initialize
+		// initialize static variables
+		ChessPiece.ChessPieceID = 1;
+		ChessMove.ChessMoveID = 1;
+		
 		ChessBoard board = new ChessBoard();
 		ArrayList<ChessPiece> boardPieces = new ArrayList<ChessPiece>();
 		

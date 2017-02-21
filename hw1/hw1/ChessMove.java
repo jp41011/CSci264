@@ -10,6 +10,8 @@ public class ChessMove {
 	public int yLocation;
 	public int moveID;
 	
+	public static int ChessMoveID;
+	
 	ChessMove(){
 		pieceType = '0';
 		xLocation = 0;
@@ -22,7 +24,7 @@ public class ChessMove {
 		pieceType = type;
 		xLocation = xloc;
 		yLocation = yloc;
-		moveID = -1;
+		moveID = ChessMoveID++;
 	}
 	
 }
