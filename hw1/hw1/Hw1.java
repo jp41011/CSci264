@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Hw1 {
 
 	static int DFS_Count = 0;
+	static boolean isDFS_solved = false;
 	static int BFS_Count = 0;
 	
 	public static void main(String[] args) {
@@ -30,6 +31,7 @@ public class Hw1 {
 		ArrayList<ChessPiece> boardPieces = new ArrayList<ChessPiece>();
 		
 		boardPieces = readPieces("puzzle1.txt");
+		//boardPieces = readPieces("puzzle2.txt"); // testing piece properties. eligible moves.
 		System.out.println("Pieces on board: " + boardPieces.size());
 		board.printBoard(boardPieces);
 		
@@ -55,12 +57,118 @@ public class Hw1 {
 	static ArrayList<ChessMove> DFS_Solve(ArrayList<ChessPiece> board)
 	{
 		ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
-		//TODO find solution using DFS
+		//printPieceSummary(board);
 		
+		//go through each piece left on the board
+		for(int pieceIndex=0; pieceIndex<board.size(); pieceIndex++)
+		{
+			ArrayList<ChessMove> goodMove = board.get(pieceIndex).getGoodMoves(board);
+			//int pieceID = board.get(pieceIndex).pieceID;
+			
+			//printMoves(goodMoves);
+			// go through each valid move
+			for(int moveID=0; moveID<goodMove.size(); moveID++)
+			{
+				ArrayList<ChessPiece> tempBoard = board;
+				int goodMoveX = goodMove.get(moveID).xLocation;
+				int goodMoveY = goodMove.get(moveID).yLocation;
+				
+				tempBoard.get(pieceIndex).xLocation = goodMoveX;
+				tempBoard.get(pieceIndex).yLocation = goodMoveY;
+				
+				int removeIndex = getIndexOfPieceAt(board, goodMoveX, goodMoveY);
+				tempBoard.remove(removeIndex);
+				
+				// are we at a solution
+				if(tempBoard.size() == 1)
+				{
+					isDFS_solved = true;
+					ChessMove newMove = new ChessMove(goodMove.get(moveID).pieceID, goodMove.get(moveID).pieceType, goodMoveX, goodMoveY);
+					moves.add(0,newMove);
+					return moves;
+				}
+				//continue to next move
+			}
+			if(isDFS_solved == true)
+			{
+				
+			}
+			
+		}
 		
 		return moves;
 	}
 	
+	static ArrayList<ChessMove> DFS_helper(ChessMove move, ArrayList<ChessPiece> board)
+	{
+		if(board.size() == 2) // next valid move will reduce board size to 1 so that would be a solution
+		{
+			ArrayList<ChessMove> solution = new ArrayList<ChessMove>();
+			solution.add(move);
+			return solution;
+		}
+		
+		// not at solution yet so make move and then recursive call
+		ArrayList<ChessPiece> tempBoard = board;
+		
+		// remove piece that will be taken
+		int takenPieceIndex = getIndexOfPieceAt(tempBoard, move.xLocation, move.yLocation);
+		tempBoard.remove(takenPieceIndex);
+		
+		// move piece to new location
+		int curPieceIndex = getIndexOfPieceID(move.pieceID, tempBoard);
+		tempBoard.get(curPieceIndex).xLocation = move.xLocation;
+		tempBoard.get(curPieceIndex).yLocation = move.yLocation;
+		
+		//get next valid moves
+		ArrayList<ChessMove> goodMove = tempBoard.get(curPieceIndex).getGoodMoves(tempBoard);
+		//empty array of chess move to store move if solution is found
+		ArrayList<ChessMove> solutionMoves = new ArrayList<ChessMove>();
+		
+		for(int moveIndex=0; moveIndex<goodMove.size(); moveIndex++)
+		{
+			solutionMoves = DFS_helper(goodMove.get(moveIndex), tempBoard);
+			if(solutionMoves.size() > 0)
+			{
+				solutionMoves.add(0,move);
+				return solutionMoves;
+			}
+		}
+		return solutionMoves; // empty ... no solution found
+	}
+	
+	/**
+	 * Given an array of pieces and an xLocation and a yLocation <br/>
+	 * Return the index of the piece that is currently at that location.
+	 * @param xloc
+	 * @param yloc
+	 * @return
+	 */
+	static int getIndexOfPieceAt(ArrayList<ChessPiece> board, int xloc, int yloc)
+	{
+		// go through board pieces find the piece with matching coordinates and return its index
+		for(int i=0; i<board.size(); i++)
+		{
+			if(board.get(i).xLocation == xloc && board.get(i).yLocation==yloc)
+				return i;
+		}
+		return -1;
+	}
+	
+	/**
+	 * Given the pieceID and an array of pieces return the index of the piece that has that pieceID
+	 * @param pID
+	 * @param board
+	 * @return
+	 */
+	static int getIndexOfPieceID(int pID, ArrayList<ChessPiece> board)
+	{
+		for(int i=0; i<board.size(); i++)
+			if(board.get(i).pieceID == pID)
+				return i;
+		
+		return -1;
+	}
 	
 	/**
 	 * Given an array of piece moves, print out the list of moves.
@@ -68,13 +176,29 @@ public class Hw1 {
 	 */
 	static void printMoves(ArrayList<ChessMove> moves)
 	{
+		System.out.println("");
 		for(int i=0; i<moves.size(); i++)
 		{
 			System.out.println( moves.get(i).pieceType + " " + moves.get(i).xLocation + " " + moves.get(i).yLocation);
 		}
 	}
 	
-	/*
+	/**
+	 * Given pieces on the board print a summary of the possible moves for each piece
+	 * @param board - array with chess pieces
+	 */
+	static void printPieceSummary(ArrayList<ChessPiece> board)
+	{
+		for(int i=0; i<board.size();i++)
+		{
+			System.out.print(board.get(i).pieceID + " " + board.get(i).pieceType);
+			System.out.print(" @ " + board.get(i).xLocation + "," + board.get(i).yLocation);
+			printMoves(board.get(i).getMoves());
+			System.out.println();
+		}
+	}
+	
+	/**
 	 * method to read in a file with the list of pieces on the board and return an array list with them
 	 * 1 letter for piece 2 number for xLocation and yLocation no spaces
 	 * Use one capital letter to id piece type, one number for the x location, one number for the y location

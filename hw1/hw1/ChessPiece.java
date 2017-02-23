@@ -58,8 +58,11 @@ public class ChessPiece {
 		}
 	}
 	
-	// function to get possible chess moves for this piece
-	//
+	/**
+	 * Returns all the possible chess moves for the current piece. <br/>
+	 * Not the same as eligible Solitaire Chess moves.
+	 * @return
+	 */
 	public ArrayList<ChessMove> getMoves()
 	{
 		ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
@@ -76,7 +79,7 @@ public class ChessPiece {
 			tempY = yLocation + 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			//else invalid location so do not add to list of moves.
@@ -86,7 +89,7 @@ public class ChessPiece {
 			tempY = yLocation + 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			
@@ -95,7 +98,7 @@ public class ChessPiece {
 			tempY = yLocation;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			
@@ -104,7 +107,7 @@ public class ChessPiece {
 			tempY = yLocation - 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			
@@ -113,7 +116,7 @@ public class ChessPiece {
 			tempY = yLocation - 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			
@@ -122,7 +125,7 @@ public class ChessPiece {
 			tempY = yLocation - 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			
@@ -131,7 +134,7 @@ public class ChessPiece {
 			tempY = yLocation;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			
@@ -140,7 +143,7 @@ public class ChessPiece {
 			tempY = yLocation + 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 		}
@@ -165,7 +168,7 @@ public class ChessPiece {
 				tempX  = xLocation + x;
 				if(isValidMove(tempX, yLocation) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, yLocation);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, yLocation);
 					moves.add(tempMove);
 				}
 			}
@@ -175,7 +178,7 @@ public class ChessPiece {
 				tempX = xLocation - x;
 				if(isValidMove(tempX, yLocation) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, yLocation);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, yLocation);
 					moves.add(tempMove);
 				}
 			}
@@ -185,7 +188,7 @@ public class ChessPiece {
 				tempY = yLocation + y;
 				if(isValidMove(xLocation, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, xLocation, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, xLocation, tempY);
 					moves.add(tempMove);
 				}
 			}
@@ -195,7 +198,7 @@ public class ChessPiece {
 				tempY = yLocation - y;
 				if(isValidMove(xLocation, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, xLocation, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, xLocation, tempY);
 					moves.add(tempMove);
 				}
 			}
@@ -206,18 +209,18 @@ public class ChessPiece {
 				tempY = yLocation + tr;
 				if(isValidMove(tempX, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 					moves.add(tempMove);
 				}
 			}
 			//moves to the top left
-			for(int tl=1; tl<distToTopLeft; tl++)
+			for(int tl=1; tl<=distToTopLeft; tl++)
 			{
 				tempX = xLocation - tl;
 				tempY = yLocation + tl;
 				if(isValidMove(tempX, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 					moves.add(tempMove);
 				}
 			}
@@ -228,7 +231,7 @@ public class ChessPiece {
 				tempY = yLocation - br;
 				if(isValidMove(tempX, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 					moves.add(tempMove);
 				}
 			}
@@ -239,7 +242,7 @@ public class ChessPiece {
 				tempY = yLocation - bl;
 				if(isValidMove(tempX, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 					moves.add(tempMove);
 				}
 			}
@@ -259,7 +262,7 @@ public class ChessPiece {
 				tempX  = xLocation + x;
 				if(isValidMove(tempX, yLocation) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, yLocation);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, yLocation);
 					moves.add(tempMove);
 				}
 			}
@@ -269,7 +272,7 @@ public class ChessPiece {
 				tempX = xLocation - x;
 				if(isValidMove(tempX, yLocation) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, yLocation);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, yLocation);
 					moves.add(tempMove);
 				}
 			}
@@ -279,7 +282,7 @@ public class ChessPiece {
 				tempY = yLocation + y;
 				if(isValidMove(xLocation, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, xLocation, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, xLocation, tempY);
 					moves.add(tempMove);
 				}
 			}
@@ -289,7 +292,7 @@ public class ChessPiece {
 				tempY = yLocation - y;
 				if(isValidMove(xLocation, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, xLocation, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, xLocation, tempY);
 					moves.add(tempMove);
 				}
 			}
@@ -316,18 +319,18 @@ public class ChessPiece {
 				tempY = yLocation + tr;
 				if(isValidMove(tempX, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 					moves.add(tempMove);
 				}
 			}
 			//moves to the top left
-			for(int tl=1; tl<distToTopLeft; tl++)
+			for(int tl=1; tl<=distToTopLeft; tl++)
 			{
 				tempX = xLocation - tl;
 				tempY = yLocation + tl;
 				if(isValidMove(tempX, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 					moves.add(tempMove);
 				}
 			}
@@ -338,7 +341,7 @@ public class ChessPiece {
 				tempY = yLocation - br;
 				if(isValidMove(tempX, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 					moves.add(tempMove);
 				}
 			}
@@ -349,7 +352,7 @@ public class ChessPiece {
 				tempY = yLocation - bl;
 				if(isValidMove(tempX, tempY) == true)
 				{
-					ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+					ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 					moves.add(tempMove);
 				}
 			}
@@ -362,7 +365,7 @@ public class ChessPiece {
 			tempX = xLocation + 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			//up and left
@@ -370,7 +373,7 @@ public class ChessPiece {
 			tempX = xLocation - 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			//down and right
@@ -378,7 +381,7 @@ public class ChessPiece {
 			tempX = xLocation + 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			//down and left
@@ -386,7 +389,7 @@ public class ChessPiece {
 			tempX = xLocation - 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			//right and up
@@ -394,7 +397,7 @@ public class ChessPiece {
 			tempY = yLocation + 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			//right and down
@@ -402,7 +405,7 @@ public class ChessPiece {
 			tempY = yLocation - 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			//left and up
@@ -410,7 +413,7 @@ public class ChessPiece {
 			tempY = yLocation + 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			//left and down
@@ -418,7 +421,7 @@ public class ChessPiece {
 			tempY = yLocation - 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 		}
@@ -430,7 +433,7 @@ public class ChessPiece {
 			tempY = yLocation + 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 			//up and left
@@ -438,7 +441,7 @@ public class ChessPiece {
 			tempY = yLocation + 1;
 			if(isValidMove(tempX, tempY) == true)
 			{
-				ChessMove tempMove = new ChessMove(this.pieceType, tempX, tempY);
+				ChessMove tempMove = new ChessMove(this.pieceID, this.pieceType, tempX, tempY);
 				moves.add(tempMove);
 			}
 		}
@@ -446,12 +449,74 @@ public class ChessPiece {
 		return moves;
 	}
 	
-	// check if location is valid and on the board
+	/**
+	 * 
+	 * @param xLoc - x coordinate (1-4) (left-right)
+	 * @param yLoc - y coordinate (1-4) (down-up)
+	 * @return
+	 */
 	private boolean isValidMove(int xLoc, int yLoc)
 	{
 		if(xLoc < 1 || xLoc > 4 || yLoc < 1 || yLoc > 4)
 			return false;
 		else
 			return true;
+	}
+	
+	/**
+	 * Given a array of pieces on the board this function will return the list of eligible solitaire chess moves.
+	 * @param board - array list of chess pieces on the board
+	 * @return - list of eligible solitaire chess moves
+	 */
+	protected ArrayList<ChessMove> getGoodMoves(ArrayList<ChessPiece> board)
+	{
+		ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
+		ArrayList<ChessMove> possibleMove = getMoves(); // get list of possible moves of this piece
+		
+		//int thisPieceIndex = getIndexOfThisPiece(board);
+		//board.remove(thisPieceIndex); // remove current piece from the board because we will be moving this piece
+		
+		// go through each piece on the board
+		for(int pieceIndex=0; pieceIndex<board.size(); pieceIndex++)
+		{
+			int pieceX = board.get(pieceIndex).xLocation;
+			int pieceY = board.get(pieceIndex).yLocation;
+			
+			// if looking at the current piece them move on to the next piece
+			if(this.xLocation == pieceX && this.yLocation == pieceY)
+				continue;
+			
+			// go through each possible move for the current piece
+			for(int moveIndex=0; moveIndex<possibleMove.size(); moveIndex++)
+			{	
+				int moveX = possibleMove.get(moveIndex).xLocation;
+				int moveY = possibleMove.get(moveIndex).yLocation;
+				
+				if(pieceX == moveX && pieceY == moveY)
+				{
+					// if the location of one of the pieces on the board matches the location of a possible move, then this is a valid solitaire chess move
+					ChessMove newMove = new ChessMove(this.pieceID, this.pieceType, moveX, moveY);
+					moves.add(newMove);
+				}
+			}
+		}
+		
+		return moves;
+	}
+	
+	/**
+	 * Given an array of pieces it will find THIS piece in the array and return the index
+	 * @param pieces
+	 * @return index of THIS current piece in the array
+	 */
+	protected int getIndexOfThisPiece(ArrayList<ChessPiece> pieces)
+	{
+		for(int i=0; i<pieces.size(); i++)
+		{
+			// if found this piece in the array then return the index
+			if(pieces.get(i).pieceID == this.pieceID && pieces.get(i).pieceType == this.pieceType)
+				return i;
+		}
+		return -1; // did not find piece in the array
 	}
 }
