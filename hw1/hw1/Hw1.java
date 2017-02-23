@@ -19,6 +19,8 @@ public class Hw1 {
 	static boolean isDFS_solved = false;
 	static int BFS_Count = 0;
 	
+	static ChessBoard GlobalBoard = new ChessBoard();
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("*** Start ***");
@@ -27,13 +29,14 @@ public class Hw1 {
 		ChessPiece.ChessPieceID = 1;
 		ChessMove.ChessMoveID = 1;
 		
-		ChessBoard board = new ChessBoard();
+		
 		ArrayList<ChessPiece> boardPieces = new ArrayList<ChessPiece>();
 		
 		boardPieces = readPieces("puzzle1.txt");
 		//boardPieces = readPieces("puzzle2.txt"); // testing piece properties. eligible moves.
 		System.out.println("Pieces on board: " + boardPieces.size());
-		board.printBoard(boardPieces);
+		
+		GlobalBoard.printBoard(boardPieces);
 		
 		//Depth First Search
 		ArrayList<ChessPiece> board1 = boardPieces;
@@ -69,39 +72,21 @@ public class Hw1 {
 			// go through each valid move
 			for(int moveID=0; moveID<goodMove.size(); moveID++)
 			{
-				ArrayList<ChessPiece> tempBoard = board;
-				int goodMoveX = goodMove.get(moveID).xLocation;
-				int goodMoveY = goodMove.get(moveID).yLocation;
-				
-				tempBoard.get(pieceIndex).xLocation = goodMoveX;
-				tempBoard.get(pieceIndex).yLocation = goodMoveY;
-				
-				int removeIndex = getIndexOfPieceAt(board, goodMoveX, goodMoveY);
-				tempBoard.remove(removeIndex);
-				
-				// are we at a solution
-				if(tempBoard.size() == 1)
-				{
-					isDFS_solved = true;
-					ChessMove newMove = new ChessMove(goodMove.get(moveID).pieceID, goodMove.get(moveID).pieceType, goodMoveX, goodMoveY);
-					moves.add(0,newMove);
+				moves = DFS_helper(goodMove.get(moveID), board);
+				// if solution is move return it 
+				if(moves.size() > 0)
 					return moves;
-				}
-				//continue to next move
 			}
-			if(isDFS_solved == true)
-			{
-				
-			}
-			
 		}
 		
-		return moves;
+		return moves; // empty ... no solution
 	}
 	
 	static ArrayList<ChessMove> DFS_helper(ChessMove move, ArrayList<ChessPiece> board)
 	{
-		if(board.size() == 2) // next valid move will reduce board size to 1 so that would be a solution
+		GlobalBoard.printBoard(board);
+		
+		if(board.size() == 1) // only 1 piece on board then solution found
 		{
 			ArrayList<ChessMove> solution = new ArrayList<ChessMove>();
 			solution.add(move);
@@ -113,6 +98,9 @@ public class Hw1 {
 		
 		// remove piece that will be taken
 		int takenPieceIndex = getIndexOfPieceAt(tempBoard, move.xLocation, move.yLocation);
+		// to add to board again if this branch does not produce a solution
+		ChessPiece copyOfRemoved = tempBoard.get(takenPieceIndex); 
+		// remove
 		tempBoard.remove(takenPieceIndex);
 		
 		// move piece to new location
@@ -120,8 +108,21 @@ public class Hw1 {
 		tempBoard.get(curPieceIndex).xLocation = move.xLocation;
 		tempBoard.get(curPieceIndex).yLocation = move.yLocation;
 		
-		//get next valid moves
+		//get next valid moves for current piece
 		ArrayList<ChessMove> goodMove = tempBoard.get(curPieceIndex).getGoodMoves(tempBoard);
+		//get next valid moves for the other pieces on the board
+		ArrayList<ChessMove> otherPieceMove = new ArrayList<ChessMove>();
+		
+		for(int i=0; i<tempBoard.size(); i++)
+		{
+			if(curPieceIndex == i)
+				continue;
+			ArrayList<ChessMove> moves1 = tempBoard.get(i).getGoodMoves(tempBoard);
+			otherPieceMove.addAll(moves1);
+		}
+		
+		goodMove.addAll(otherPieceMove);
+		
 		//empty array of chess move to store move if solution is found
 		ArrayList<ChessMove> solutionMoves = new ArrayList<ChessMove>();
 		
@@ -134,6 +135,9 @@ public class Hw1 {
 				return solutionMoves;
 			}
 		}
+		// add back piece that was removed at the beginning of this function
+		tempBoard.add(takenPieceIndex, copyOfRemoved);
+		// TODO left off here
 		return solutionMoves; // empty ... no solution found
 	}
 	
@@ -179,7 +183,7 @@ public class Hw1 {
 		System.out.println("");
 		for(int i=0; i<moves.size(); i++)
 		{
-			System.out.println( moves.get(i).pieceType + " " + moves.get(i).xLocation + " " + moves.get(i).yLocation);
+			System.out.println( "["+ moves.get(i).pieceID + "] " + moves.get(i).pieceType + " " + moves.get(i).xLocation + " " + moves.get(i).yLocation);
 		}
 	}
 	
