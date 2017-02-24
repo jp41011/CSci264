@@ -463,6 +463,102 @@ public class ChessPiece {
 			return true;
 	}
 	
+	protected ChessMove moveUp(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc, yloc+1);
+		return move;
+	}
+	
+	protected ChessMove moveDown(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc, yloc-1);
+		return move;
+	}
+	
+	protected ChessMove moveLeft(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc-1, yloc);
+		return move;
+	}
+	
+	protected ChessMove moveRight(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc+1, yloc);
+		return move;
+	}
+	
+	protected ChessMove moveUpLeft(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc-1, yloc+1);
+		return move;
+	}
+	
+	protected ChessMove moveUpRight(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc+1, yloc+1);
+		return move;
+	}
+	
+	protected ChessMove moveDownRight(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc+1, yloc-1);
+		return move;
+	}
+	
+	protected ChessMove moveDownLeft(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc-1, yloc-1);
+		return move;
+	}
+	
+	protected ChessMove moveKnight1(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc-1, yloc+2);
+		return move;
+	}
+	
+	protected ChessMove moveKnight2(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc+1, yloc+2);
+		return move;
+	}
+	
+	protected ChessMove moveKnight3(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc+2, yloc+1);
+		return move;
+	}
+	
+	protected ChessMove moveKnight4(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc+2, yloc-1);
+		return move;
+	}
+	
+	protected ChessMove moveKnight5(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc+1, yloc-2);
+		return move;
+	}
+	
+	protected ChessMove moveKnight6(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc-1, yloc-2);
+		return move;
+	}
+	
+	protected ChessMove moveKnight7(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc-2, yloc-1);
+		return move;
+	}
+	
+	protected ChessMove moveKnight8(int xloc, int yloc)
+	{
+		ChessMove move = new ChessMove(-1, '0', xloc-2, yloc+1);
+		return move;
+	}
+	
 	/**
 	 * Given a array of pieces on the board this function will return the list of eligible solitaire chess moves.
 	 * @param board - array list of chess pieces on the board
@@ -471,37 +567,47 @@ public class ChessPiece {
 	protected ArrayList<ChessMove> getGoodMoves(ArrayList<ChessPiece> board)
 	{
 		ArrayList<ChessMove> moves = new ArrayList<ChessMove>();
-		ArrayList<ChessMove> possibleMove = getMoves(); // get list of possible moves of this piece
+		int pieceIndex = getIndexOfThisPiece(board);
+		int thisX = board.get(pieceIndex).xLocation;
+		int thisY = board.get(pieceIndex).yLocation;
 		
-		//int thisPieceIndex = getIndexOfThisPiece(board);
-		//board.remove(thisPieceIndex); // remove current piece from the board because we will be moving this piece
-		
-		// go through each piece on the board
-		for(int pieceIndex=0; pieceIndex<board.size(); pieceIndex++)
-		{
-			int pieceX = board.get(pieceIndex).xLocation;
-			int pieceY = board.get(pieceIndex).yLocation;
-			
-			// if looking at the current piece them move on to the next piece
-			if(this.xLocation == pieceX && this.yLocation == pieceY)
-				continue;
-			
-			// go through each possible move for the current piece
-			for(int moveIndex=0; moveIndex<possibleMove.size(); moveIndex++)
-			{	
-				int moveX = possibleMove.get(moveIndex).xLocation;
-				int moveY = possibleMove.get(moveIndex).yLocation;
-				
-				if(pieceX == moveX && pieceY == moveY)
+		if(this.pieceType == 'K'){
+			ChessMove tmove = moveUp(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
 				{
-					// if the location of one of the pieces on the board matches the location of a possible move, then this is a valid solitaire chess move
-					ChessMove newMove = new ChessMove(this.pieceID, this.pieceType, moveX, moveY);
-					moves.add(newMove);
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
 				}
 			}
+			// other king moves TODO
+		}else if(this.pieceType == 'Q'){
+			pieceValue = 9;
+		}else if(this.pieceType == 'R'){
+			pieceValue = 5;
+		}else if(this.pieceType == 'B'){
+			pieceValue = 3;
+		}else if(this.pieceType == 'N'){
+			pieceValue = 3;
+		}else if(this.pieceType == 'P'){
+			pieceValue = 1;
+		}else{
+
 		}
 		
 		return moves;
+	}
+	
+	protected boolean isOccupied(int xloc, int yloc, ArrayList<ChessPiece> board)
+	{
+		for(int i=0; i<board.size(); i++)
+		{
+			if(board.get(i).xLocation == xloc && board.get(i).yLocation == yloc)
+				return true;
+		}
+		return false;
 	}
 	
 	/**

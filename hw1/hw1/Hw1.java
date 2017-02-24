@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Hw1 {
 
 	static int DFS_Count = 0;
-	static boolean isDFS_solved = false;
+	//static boolean isDFS_solved = false;
 	static int BFS_Count = 0;
 	
 	static ChessBoard GlobalBoard = new ChessBoard();
@@ -32,17 +32,21 @@ public class Hw1 {
 		
 		ArrayList<ChessPiece> boardPieces = new ArrayList<ChessPiece>();
 		
-		boardPieces = readPieces("puzzle1.txt");
+		//boardPieces = readPieces("puzzle1.txt");
 		//boardPieces = readPieces("puzzle2.txt"); // testing piece properties. eligible moves.
+		boardPieces = readPieces("puzzle3.txt");
 		System.out.println("Pieces on board: " + boardPieces.size());
 		
 		GlobalBoard.printBoard(boardPieces);
 		
 		//Depth First Search
+		System.out.println("========== DFS ==========");
 		ArrayList<ChessPiece> board1 = boardPieces;
 		ArrayList<ChessMove> solution1 = DFS_Solve(board1);
 		System.out.println("Nodes touched: " + DFS_Count);
+		System.out.println("Solution: ");
 		printMoves(solution1);
+		GlobalBoard.printBoard(board1);
 		
 		//Breadth First Search
 		//Depth Limited Search
@@ -82,63 +86,76 @@ public class Hw1 {
 		return moves; // empty ... no solution
 	}
 	
+	/**
+	 * recursive helper function 
+	 * @param move - next move to do
+	 * @param board - current state
+	 * @return
+	 */
 	static ArrayList<ChessMove> DFS_helper(ChessMove move, ArrayList<ChessPiece> board)
 	{
+		DFS_Count++; // increase the number of states that we are looking
 		GlobalBoard.printBoard(board);
+		move.print();
 		
-		if(board.size() == 1) // only 1 piece on board then solution found
+		//get information about piece that is going to get removed in case we have to put it back
+		int removedX = move.xLocation;
+		int removedY = move.yLocation;
+		int removeIndex = getIndexOfPieceAt(board, removedX, removedY);
+		ChessPiece removedPiece = board.get(removeIndex);
+		
+		board.remove(removeIndex); // remove piece from the board
+		
+		//update the location of the piece that took the removed piece
+		int movedPieceIndex = getIndexOfPieceID(move.pieceID, board);
+		int oldX = board.get(movedPieceIndex).xLocation; // incase we have to move this piece back
+		int oldY = board.get(movedPieceIndex).yLocation;
+		board.get(movedPieceIndex).xLocation = move.xLocation;
+		board.get(movedPieceIndex).yLocation = move.yLocation;
+		
+		
+		//check if this is a solution ... 1 piece on the board
+		ArrayList<ChessMove> solution = new ArrayList<ChessMove>(); // empty
+		if(board.size() == 1)
 		{
-			ArrayList<ChessMove> solution = new ArrayList<ChessMove>();
+			System.out.println("Found Solution");
+			GlobalBoard.printBoard(board);
 			solution.add(move);
 			return solution;
 		}
 		
-		// not at solution yet so make move and then recursive call
-		ArrayList<ChessPiece> tempBoard = board;
-		
-		// remove piece that will be taken
-		int takenPieceIndex = getIndexOfPieceAt(tempBoard, move.xLocation, move.yLocation);
-		// to add to board again if this branch does not produce a solution
-		ChessPiece copyOfRemoved = tempBoard.get(takenPieceIndex); 
-		// remove
-		tempBoard.remove(takenPieceIndex);
-		
-		// move piece to new location
-		int curPieceIndex = getIndexOfPieceID(move.pieceID, tempBoard);
-		tempBoard.get(curPieceIndex).xLocation = move.xLocation;
-		tempBoard.get(curPieceIndex).yLocation = move.yLocation;
-		
-		//get next valid moves for current piece
-		ArrayList<ChessMove> goodMove = tempBoard.get(curPieceIndex).getGoodMoves(tempBoard);
-		//get next valid moves for the other pieces on the board
-		ArrayList<ChessMove> otherPieceMove = new ArrayList<ChessMove>();
-		
-		for(int i=0; i<tempBoard.size(); i++)
+		// else has to look at all the next moves
+		ArrayList<ChessMove> goodMoves = board.get(movedPieceIndex).getGoodMoves(board); //next moves for current piece
+		//get possible moves with the other pieces
+		for(int i=0; i<board.size(); i++)
 		{
-			if(curPieceIndex == i)
-				continue;
-			ArrayList<ChessMove> moves1 = tempBoard.get(i).getGoodMoves(tempBoard);
-			otherPieceMove.addAll(moves1);
+			if(i == movedPieceIndex)
+				continue; // already added the moves for current piece
+			
+			ArrayList<ChessMove> tempMoves = board.get(i).getGoodMoves(board);
+			goodMoves.addAll(tempMoves); // to to the list of moves we already have
 		}
 		
-		goodMove.addAll(otherPieceMove);
-		
-		//empty array of chess move to store move if solution is found
-		ArrayList<ChessMove> solutionMoves = new ArrayList<ChessMove>();
-		
-		for(int moveIndex=0; moveIndex<goodMove.size(); moveIndex++)
+		//go through and check where the next moves lead to.
+		for(int i=0; i<goodMoves.size(); i++)
 		{
-			solutionMoves = DFS_helper(goodMove.get(moveIndex), tempBoard);
-			if(solutionMoves.size() > 0)
+			solution = DFS_helper(goodMoves.get(i), board);
+			if(solution.size() > 0)
 			{
-				solutionMoves.add(0,move);
-				return solutionMoves;
+				//non empty, so solution was found
+				solution.add(0,move); // so add move that got us to this point to the solution
+				return solution;
 			}
 		}
-		// add back piece that was removed at the beginning of this function
-		tempBoard.add(takenPieceIndex, copyOfRemoved);
-		// TODO left off here
-		return solutionMoves; // empty ... no solution found
+		
+		//undo move and replace taken piece
+		board.get(movedPieceIndex).xLocation = oldX; // move moved piece back to the original location
+		board.get(movedPieceIndex).yLocation = oldY;
+		//replace taken piece to the board
+		board.add(removeIndex, removedPiece);
+		
+		// did not find solution so return the empty array of moves
+		return solution;
 	}
 	
 	/**

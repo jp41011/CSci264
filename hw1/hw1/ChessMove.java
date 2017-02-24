@@ -30,4 +30,8 @@ public class ChessMove {
 		moveID = ChessMoveID++;
 	}
 	
+	protected void print()
+	{
+		System.out.println("Move: [" + pieceID + "] " + pieceType + ": " + xLocation + "," + yLocation);
+	}
 }
