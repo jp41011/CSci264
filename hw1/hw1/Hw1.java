@@ -32,12 +32,22 @@ public class Hw1 {
 		
 		ArrayList<ChessPiece> boardPieces = new ArrayList<ChessPiece>();
 		
-		//boardPieces = readPieces("puzzle1.txt");
+		//boardPieces = readPieces("puzzle1.txt"); //easy
 		//boardPieces = readPieces("puzzle2.txt"); // testing piece properties. eligible moves.
-		boardPieces = readPieces("puzzle3.txt");
+		//boardPieces = readPieces("puzzle3.txt"); //easy
+		//boardPieces = readPieces("puzzle4.txt"); //medium
+		boardPieces = readPieces("puzzle5.txt"); //hard
+		
 		System.out.println("Pieces on board: " + boardPieces.size());
 		
 		GlobalBoard.printBoard(boardPieces);
+		
+		/*testing
+		System.out.println("Testing");
+		ArrayList<ChessMove> testMoves = boardPieces.get(0).getGoodMoves(boardPieces);
+		printMoves(testMoves);
+		System.out.println("Testing");
+		*/
 		
 		//Depth First Search
 		System.out.println("========== DFS ==========");

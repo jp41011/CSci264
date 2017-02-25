@@ -572,6 +572,7 @@ public class ChessPiece {
 		int thisY = board.get(pieceIndex).yLocation;
 		
 		if(this.pieceType == 'K'){
+			//move up
 			ChessMove tmove = moveUp(thisX, thisY);
 			if(isValidMove(tmove.xLocation, tmove.yLocation))
 			{
@@ -582,23 +583,626 @@ public class ChessPiece {
 					moves.add(tmove);
 				}
 			}
-			// other king moves TODO
+			
+			//move up left
+			tmove = moveUpLeft(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move left
+			tmove = moveLeft(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move down left
+			tmove = moveDownLeft(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move down
+			tmove = moveDown(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move down right
+			tmove = moveDownRight(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move right
+			tmove = moveRight(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move up right
+			tmove = moveUpRight(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
 		}else if(this.pieceType == 'Q'){
-			pieceValue = 9;
-		}else if(this.pieceType == 'R'){
-			pieceValue = 5;
-		}else if(this.pieceType == 'B'){
-			pieceValue = 3;
-		}else if(this.pieceType == 'N'){
-			pieceValue = 3;
-		}else if(this.pieceType == 'P'){
-			pieceValue = 1;
-		}else{
 
+			boolean keepGoing = true; // keep going until you reach the edge or find a piece
+			ChessMove tmove = new ChessMove();
+			int tempX = thisX;
+			int tempY = thisY;
+			//up
+			while(keepGoing)
+			{
+				tmove = moveUp(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//right
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveRight(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//down
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveDown(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//left
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveLeft(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//up right
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveUpRight(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//up left
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveUpLeft(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//down left
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveDownLeft(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//down right
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveDownRight(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+		}else if(this.pieceType == 'R'){
+			
+			boolean keepGoing = true; // keep going until you reach the edge or find a piece
+			ChessMove tmove = new ChessMove();
+			int tempX = thisX;
+			int tempY = thisY;
+			//up
+			while(keepGoing)
+			{
+				tmove = moveUp(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//right
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveRight(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//down
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveDown(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//left
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveLeft(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+		}else if(this.pieceType == 'B'){
+			
+			boolean keepGoing = true; // keep going until you reach the edge or find a piece
+			ChessMove tmove = new ChessMove();
+			int tempX = thisX;
+			int tempY = thisY;
+			//up right
+			while(keepGoing)
+			{
+				tmove = moveUpRight(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//up left
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveUpLeft(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//down left
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveDownLeft(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+			//down right
+			keepGoing = true; // reset
+			tempX = thisX;
+			tempY = thisY;
+			
+			while(keepGoing)
+			{
+				tmove = moveDownRight(tempX, tempY);
+				if(isValidMove(tmove.xLocation, tmove.yLocation))
+				{
+					if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+					{
+						tmove.pieceID = this.pieceID;
+						tmove.pieceType = this.pieceType;
+						moves.add(tmove);
+						keepGoing = false; // found a piece
+					}
+				}else{
+					keepGoing = false; // reached edge
+				}
+				
+				tempX = tmove.xLocation;
+				tempY = tmove.yLocation;
+			}
+			
+		}else if(this.pieceType == 'N'){
+			
+			//move1
+			ChessMove tmove = moveKnight1(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move2
+			tmove = moveKnight2(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move3
+			tmove = moveKnight3(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move4
+			tmove = moveKnight4(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move5
+			tmove = moveKnight5(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move6
+			tmove = moveKnight6(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move7
+			tmove = moveKnight7(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+			//move8
+			tmove = moveKnight8(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+		}else if(this.pieceType == 'P'){
+			//move up left
+			ChessMove tmove = moveUpLeft(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			//move up right
+			tmove = moveUpRight(thisX, thisY);
+			if(isValidMove(tmove.xLocation, tmove.yLocation))
+			{
+				if(isOccupied(tmove.xLocation, tmove.yLocation, board))
+				{
+					tmove.pieceID = this.pieceID;
+					tmove.pieceType = this.pieceType;
+					moves.add(tmove);
+				}
+			}
+			
+		}else{
+			System.out.println("Invalid piece: " + this.pieceType);
 		}
 		
 		return moves;
 	}
+	
 	
 	protected boolean isOccupied(int xloc, int yloc, ArrayList<ChessPiece> board)
 	{
