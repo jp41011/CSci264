@@ -10,14 +10,15 @@ import java.util.ArrayList;
 /*
  * Juan Pedraza - CSci 264 - Artificial Intelligence - 2/12/17
  * HW 1 - State Space Search w/ Solitaire Chess
+ * This program will take in a chess solitaire puzzle as input and will proved
+ * a solution using various different algorithms
  * 
  */
 
 public class Hw1 {
 
 	static int DFS_Count = 0;
-	//static boolean isDFS_solved = false;
-	static int BFS_Count = 0;
+	
 	
 	static ChessBoard GlobalBoard = new ChessBoard();
 	
@@ -35,8 +36,8 @@ public class Hw1 {
 		//boardPieces = readPieces("puzzle1.txt"); //easy
 		//boardPieces = readPieces("puzzle2.txt"); // testing piece properties. eligible moves.
 		//boardPieces = readPieces("puzzle3.txt"); //easy
-		boardPieces = readPieces("puzzle4.txt"); //medium
-		//boardPieces = readPieces("puzzle5.txt"); //hard
+		//boardPieces = readPieces("puzzle4.txt"); //medium
+		boardPieces = readPieces("puzzle5.txt"); //hard
 		
 		System.out.println("Pieces on board: " + boardPieces.size());
 		
@@ -60,6 +61,14 @@ public class Hw1 {
 		
 		//Breadth First Search
 		//Depth Limited Search
+		/*
+		System.out.println("========== Depht Limited Search ==========");
+		ArrayList<ChessPiece> board2 = boardPieces;
+		ArrayList<ChessMove> solution2 = IDDFS_solve(board2);
+		System.out.println("Solution: ");
+		printMoves(solution2);
+		GlobalBoard.printBoard(board2);
+		*/
 		//iterative Deepening Search
 		//A* search
 		
@@ -272,5 +281,18 @@ public class Hw1 {
 		
 		return pieces;
 	}
+	
+	/**
+	 * Iterative deepening depth first search
+	 * @param board
+	 * @return
+	 */
+	static ArrayList<ChessMove> IDDFS_solve(ArrayList<ChessPiece> board)
+	{
+		// will use DFS but limit the depht
+		ArrayList<ChessMove> solution = DFS_Solve(board);
+		return solution;
+	}
 
+	
 }
