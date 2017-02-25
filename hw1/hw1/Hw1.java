@@ -35,8 +35,8 @@ public class Hw1 {
 		//boardPieces = readPieces("puzzle1.txt"); //easy
 		//boardPieces = readPieces("puzzle2.txt"); // testing piece properties. eligible moves.
 		//boardPieces = readPieces("puzzle3.txt"); //easy
-		//boardPieces = readPieces("puzzle4.txt"); //medium
-		boardPieces = readPieces("puzzle5.txt"); //hard
+		boardPieces = readPieces("puzzle4.txt"); //medium
+		//boardPieces = readPieces("puzzle5.txt"); //hard
 		
 		System.out.println("Pieces on board: " + boardPieces.size());
 		
@@ -53,7 +53,7 @@ public class Hw1 {
 		System.out.println("========== DFS ==========");
 		ArrayList<ChessPiece> board1 = boardPieces;
 		ArrayList<ChessMove> solution1 = DFS_Solve(board1);
-		System.out.println("Nodes touched: " + DFS_Count);
+		System.out.println("States explored: " + DFS_Count);
 		System.out.println("Solution: ");
 		printMoves(solution1);
 		GlobalBoard.printBoard(board1);

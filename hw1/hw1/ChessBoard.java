@@ -20,13 +20,6 @@ import java.util.ArrayList;
  */
 
 public class ChessBoard {
-
-	
-	
-	// function to add piece to board
-	public void addPiece(){
-		
-	}
 	
 	// function to print the current view of the board
 	/**
