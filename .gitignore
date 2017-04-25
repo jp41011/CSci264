@@ -1,1 +1,6 @@
 c264s17.syllabus.pdf
+.metadata/
+*.pdf
+*.docx
+*.zip
+*/.settings/*
