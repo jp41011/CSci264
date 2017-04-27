@@ -21,5 +21,10 @@ public class Cell {
 		y = tempY;
 		val = tempVal;
 	}
+	
+	// getters
+	int getX(){return x;}
+	int getY(){return y;}
+	int getVal(){return val;}
 
 }

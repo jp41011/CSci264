@@ -26,6 +26,9 @@ public class SudokuBoard {
 		board = new int[boardWidth][boardHeight];
 	}
 	
+	// getter function to get value at particular square
+	public int getVal(int x, int y){return board[x][y];}
+	
 	// print board
 	public void print()
 	{
@@ -84,7 +87,8 @@ public class SudokuBoard {
 	{
 		if(tempX < 0 || tempX >= boardWidth || tempY < 0 || tempY >= boardHeight)
 		{
-			System.out.println("Invliad coor: " + tempX + ", " + tempY);
+			if(GlobalVar.isDebugMode)
+				System.out.println("Invliad coor: " + tempX + ", " + tempY);
 			return;
 		}
 		board[tempX][tempY] = 0;
@@ -99,7 +103,8 @@ public class SudokuBoard {
 		// check value range
 		if( tempVal <= 0 || tempVal > boardWidth)
 		{
-			System.out.println("Invalid value: " + tempVal + " @ " + (tempX+1) + ", " + (tempY+1) );
+			if(GlobalVar.isDebugMode)
+				System.out.println("Invalid value: " + tempVal + " @ " + (tempX+1) + ", " + (tempY+1) );
 			return false;
 		}
 		// check row
@@ -107,7 +112,8 @@ public class SudokuBoard {
 		{
 			if(board[x][tempY] == tempVal) // value is already in this row
 			{
-				System.out.println("Value " + tempVal + " is already in the same row @ " + (x+1) + ", " + (tempY+1) );
+				if(GlobalVar.isDebugMode)
+					System.out.println("Value " + tempVal + " is already in the same row @ " + (x+1) + ", " + (tempY+1) );
 				return false;
 			}
 		}
@@ -116,7 +122,8 @@ public class SudokuBoard {
 		{
 			if(board[tempX][y] == tempVal)
 			{
-				System.out.println("Value " + tempVal + " is already in the same column @ " + (tempX+1) + ", " + (y+1) );
+				if(GlobalVar.isDebugMode)
+					System.out.println("Value " + tempVal + " is already in the same column @ " + (tempX+1) + ", " + (y+1) );
 				return false;
 			}
 		}
@@ -137,7 +144,8 @@ public class SudokuBoard {
 				boardVal = board[x][y];
 				if(boardVal == tempVal)
 				{
-					System.out.println("Value " + tempVal + " is already in the same square @ " + (x+1) + ", " + (y+1));
+					if(GlobalVar.isDebugMode)
+						System.out.println("Value " + tempVal + " is already in the same square @ " + (x+1) + ", " + (y+1));
 					return false;
 				}
 			}
@@ -158,7 +166,8 @@ public class SudokuBoard {
 			{
 				if(board[x][y] == 0)
 				{
-					System.out.println("Empty square @ " + (x+1) + ", " + (y+1) );
+					if(GlobalVar.isDebugMode)
+						System.out.println("Empty square @ " + (x+1) + ", " + (y+1) );
 					return false;
 				}
 			}
@@ -181,6 +190,7 @@ public class SudokuBoard {
 				if(board[x][y] == 0) // is empty
 				{
 					tCell = new Cell(x, y);
+					return tCell;
 				}
 			}
 		}

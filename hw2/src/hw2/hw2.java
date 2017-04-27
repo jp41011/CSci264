@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+
 /**
  Juan Pedraza - CSci 264 - HW2
  Sudoku Solver
@@ -26,27 +27,57 @@ public class hw2 {
 		SudokuBoard board3 = new SudokuBoard(3);
 		board3.print();
 		*/
+
+		int statesExplored; // how many states were explored
 		
+		/*
+		// already solved 4x4 board
 		SudokuBoard board21 = importBoard("board21.txt");
 		System.out.println("Initial board(21): ");
 		board21.print();
-		boolean isSolved21 = board21.isSolved();
-		if(isSolved21)
-			System.out.println("Board Solved!");
 		
+		statesExplored = DFS(board21); // solve using DFS
+		printSummary(board21, statesExplored);
 		
+		// board 4x4 w/ missing numbers
+		SudokuBoard board22 = importBoard("board22.txt");
+		System.out.println("Initial board(22): ");
+		board22.print();
+		
+		statesExplored = DFS(board22); // solve using DFS
+		printSummary(board22, statesExplored);
+		*/
+		
+		// board 9x9 w/ missing numbers
 		SudokuBoard board31 = importBoard("board31.txt");
 		System.out.println("Initial board(31): ");
 		board31.print();
-		board31.addNum(7, 3, 1); // should error same square
-		board31.addNum(4, 8, 2); // should error same column
-		board31.addNum(6, 6, 2); // should error same row
-		boolean isSolved31 = board31.isSolved();
-		if(isSolved31)
-			System.out.println("Board Solved!");
+		statesExplored = DFS(board31);
+		printSummary(board31, statesExplored);
 		
-		// call DFS solution
+		// board 9x9 w/ missing numbers ... "worlds hardest sudoku"
+		SudokuBoard board33 = importBoard("board33.txt");
+		System.out.println("Initial board(33): ");
+		board33.print();
+		statesExplored = DFS(board33);
+		printSummary(board33, statesExplored);
 		
+		
+		// board 16x16 w/ missing numbers
+		SudokuBoard board41 = importBoard("board41.txt");
+		System.out.println("Initial board(41): ");
+		board41.print();
+		statesExplored = DFS(board41);
+		printSummary(board41, statesExplored);
+		
+		/*
+		// board 25x25 w/ missing numbers ... infinite loop?? or just takes really long
+		SudokuBoard board51 = importBoard("board51.txt");
+		System.out.println("Initial board(51): ");
+		board51.print();
+		statesExplored = DFS(board51);
+		printSummary(board51, statesExplored);
+		*/
 		
 		// call heuristic solution
 
@@ -89,10 +120,86 @@ public class hw2 {
 	 	Start from the bottom left corner and start populated cells,
 	 	moving left to right, bottom up.
 	*/
-	public static void DFS(SudokuBoard board)
+	public static int DFS(SudokuBoard board)
 	{
-		// get next empty cell and start from there
-		return; // 
+		//init DFS_Count for this board
+		DFS_Count = 0;
+		 
+		// call helper function
+		DFS_helper(board);
+		
+		return DFS_Count; // 
+	}
+	
+	/* DFS_helper
+	 * recursive function to do the DFS searching
+	 */
+	public static boolean DFS_helper(SudokuBoard board)
+	{
+		//System.out.println("DFS_Helper");
+		boolean isFinished = false; // finished going through board? either found solution or tried every possible state and no solution
+		isFinished = board.isSolved(); // check if board is solved
+		
+		if(isFinished) // board solved
+			return true; // exit
+		
+		// check if there is an empty cell to try
+		
+		Cell cell = board.getNextEmptyCell();
+		int tempX = cell.getX();
+		int tempY = cell.getY();
+		
+		//System.out.println("Currently @ " + tempX + ", " + tempY);
+		//board.print();
+		
+		if(tempX == -1 && tempY == -1) // no more empty cells
+			return true; // exit. no solution
+		
+		//else explore this cell and continue
+		// get possible numbers that this cell could be
+		// try every number until solution found or end is reached
+		int maxNum = board.squareSize * board.squareSize; // get the max number that can appear on the board
+		for(int tval = 1; tval <= maxNum; tval++)
+		{
+			DFS_Count++; // increase the states explored count
+			
+			//set flag for testing
+			if( board.getVal(0,0) == 7
+				//&& board.getVal(1,0) == 8
+				//&& board.getVal(2,0) == 9
+					)
+				tempX = tempX + 0; // No-Op
+			
+			
+			// check if placing the number in the cell is an valid move
+			boolean isGoodMove = board.addNum(tempX, tempY, tval); // try tval in empty cell
+			if(isGoodMove)
+			{
+				isFinished = DFS_helper(board);
+				if(isFinished) // found solution
+					return true; // exit return true
+				else
+					board.removeNum(tempX, tempY); // remove the number that had been added, since it does not lead to solution
+			}
+			//else continue on to the next number
+		}
+		
+		// went through all numbers in this cell and nothing returned solution so return false no solution
+		return false;
+	}
+	
+	// helper function to output summary of board results
+	public static void printSummary(SudokuBoard board, int stateCount)
+	{
+		if(board.isSolved())
+			System.out.println("Solution Found! :) ");
+		else
+			System.out.println("No solution found. :( ");
+		
+		System.out.println("States explored: " + stateCount);
+		board.print(); // display final board
+		System.out.println("===================================\n");
+		return;
 	}
 
 }

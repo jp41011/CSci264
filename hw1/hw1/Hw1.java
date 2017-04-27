@@ -37,7 +37,8 @@ public class Hw1 {
 		//boardPieces = readPieces("puzzle2.txt"); // testing piece properties. eligible moves.
 		//boardPieces = readPieces("puzzle3.txt"); //easy
 		//boardPieces = readPieces("puzzle4.txt"); //medium
-		boardPieces = readPieces("puzzle5.txt"); //hard
+		//boardPieces = readPieces("puzzle5.txt"); //hard
+		boardPieces = readPieces("puzzle6.txt"); // in class
 		
 		System.out.println("Pieces on board: " + boardPieces.size());
 		
@@ -55,14 +56,14 @@ public class Hw1 {
 		ArrayList<ChessPiece> board1 = boardPieces;
 		ArrayList<ChessMove> solution1 = DFS_Solve(board1);
 		System.out.println("States explored: " + DFS_Count);
-		System.out.println("Solution: ");
+		System.out.println("Solution: " + solution1.size() + " moves");
 		printMoves(solution1);
 		GlobalBoard.printBoard(board1);
 		
 		//Breadth First Search
 		//Depth Limited Search
 		/*
-		System.out.println("========== Depht Limited Search ==========");
+		System.out.println("========== Depth Limited Search ==========");
 		ArrayList<ChessPiece> board2 = boardPieces;
 		ArrayList<ChessMove> solution2 = IDDFS_solve(board2);
 		System.out.println("Solution: ");
