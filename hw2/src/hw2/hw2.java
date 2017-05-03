@@ -35,32 +35,45 @@ public class hw2 {
 		SudokuBoard board21 = importBoard("board21.txt");
 		System.out.println("Initial board(21): ");
 		board21.print();
-		
 		statesExplored = DFS(board21); // solve using DFS
 		printSummary(board21, statesExplored);
+		*/
 		
 		// board 4x4 w/ missing numbers
 		SudokuBoard board22 = importBoard("board22.txt");
 		System.out.println("Initial board(22): ");
 		board22.print();
-		
 		statesExplored = DFS(board22); // solve using DFS
 		printSummary(board22, statesExplored);
-		*/
+		
+		
 		
 		// board 9x9 w/ missing numbers
-		SudokuBoard board31 = importBoard("board31.txt");
-		System.out.println("Initial board(31): ");
-		board31.print();
-		statesExplored = DFS(board31);
-		printSummary(board31, statesExplored);
+		SudokuBoard board32 = importBoard("board32.txt");
+		System.out.println("Initial board(32): ");
+		board32.print();
+		statesExplored = DFS(board32);
+		printSummary(board32, statesExplored);
+		
+		
 		
 		// board 9x9 w/ missing numbers ... "worlds hardest sudoku"
 		SudokuBoard board33 = importBoard("board33.txt");
+		//SudokuBoard boardTest = new SudokuBoard(board33);
 		System.out.println("Initial board(33): ");
 		board33.print();
 		statesExplored = DFS(board33);
 		printSummary(board33, statesExplored);
+		
+		//boardTest.print();
+		/*
+		// solve with different method
+		SudokuBoard board33_2 = importBoard("board33.txt");
+		System.out.println("Initial board(33_2): ");
+		board33_2.print();
+		statesExplored = solver1(board33_2);
+		printSummary(board33_2, statesExplored);
+		*/
 		
 		
 		// board 16x16 w/ missing numbers
@@ -70,14 +83,15 @@ public class hw2 {
 		statesExplored = DFS(board41);
 		printSummary(board41, statesExplored);
 		
-		/*
+		
+		
 		// board 25x25 w/ missing numbers ... infinite loop?? or just takes really long
 		SudokuBoard board51 = importBoard("board51.txt");
 		System.out.println("Initial board(51): ");
 		board51.print();
-		statesExplored = DFS(board51);
-		printSummary(board51, statesExplored);
-		*/
+		//statesExplored = DFS(board51);
+		//printSummary(board51, statesExplored);
+		
 		
 		// call heuristic solution
 
@@ -163,12 +177,14 @@ public class hw2 {
 		{
 			DFS_Count++; // increase the states explored count
 			
+			/*
 			//set flag for testing
 			if( board.getVal(0,0) == 7
 				//&& board.getVal(1,0) == 8
 				//&& board.getVal(2,0) == 9
 					)
 				tempX = tempX + 0; // No-Op
+			*/
 			
 			
 			// check if placing the number in the cell is an valid move
@@ -187,6 +203,64 @@ public class hw2 {
 		// went through all numbers in this cell and nothing returned solution so return false no solution
 		return false;
 	}
+	
+	/* solver1
+	 * user better cell selection to solve sudoku puzzle faster
+	 
+	public static int solver1(SudokuBoard board)
+	{
+		H_Count = 0; // reset counter
+		
+		solver1_helper(board); // call recursive function
+		
+		return H_Count;
+	}
+	*/
+	
+	/* solver1_helper
+	 * recursive function to solve the sudoku puzzle using better cell selection
+	
+	public static boolean solver1_helper(SudokuBoard board)
+	{
+		boolean isFinished = false; // finished going through board? either found solution or tried every possible state and no solution
+		isFinished = board.isSolved(); // check if board is solved
+		
+		if(isFinished) // board solved
+			return true; // exit
+		
+		// check if there is an empty cell to try
+		
+		Cell cell = board.getNextBestCell();
+		int tempX = cell.getX();
+		int tempY = cell.getY();
+		
+		//System.out.println("Currently @ " + tempX + ", " + tempY);
+		//board.print();
+		
+		if(tempX == -1 && tempY == -1) // no more empty cells
+			return true; // exit. no solution
+		
+		// start at the given cell
+		int maxNum = board.squareSize * board.squareSize;
+		for(int tval = 1; tval <= maxNum; tval++)
+		{
+			H_Count++;
+			// check if filling out the cell with tval is valid
+			boolean isGoodMove = board.addNum(tempX, tempY, tval);
+			if(isGoodMove) // then cell was filled
+			{
+				isFinished = solver1_helper(board);
+				if(isFinished) // solution found
+					return true;
+				else
+					board.removeNum(tempX, tempY); // remove and move on to next value to try at this cell
+			}
+		}
+		
+		// if we tried everything and no solution was found then there is no solution
+		return false;
+	}
+	*/
 	
 	// helper function to output summary of board results
 	public static void printSummary(SudokuBoard board, int stateCount)
